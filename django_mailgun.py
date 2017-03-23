@@ -154,6 +154,7 @@ class MailgunBackend(BaseEmailBackend):
                     auth=("api", self._access_key),
                     data=content, headers=headers)
         except:
+            response.connection.close()
             if not self.fail_silently:
                 raise
             return False

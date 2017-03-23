@@ -145,16 +145,13 @@ class MailgunBackend(BaseEmailBackend):
                 for attachment in email_message.attachments:
                     post_data.append(('attachment', (attachment[0], attachment[1],)))
                 content, header = encode_multipart_formdata(post_data)
-                headers = {'Content-Type': header}
+                headers = {'Content-Type': header, 'Connection': 'close'}
             else:
                 content = post_data
+                headers = {'Connection': 'close'}
                 headers = None
 
-            response = requests.post(self._api_url + "messages",
-                    auth=("api", self._access_key),
-                    data=content, headers=headers)
         except:
-            response.connection.close()
             if not self.fail_silently:
                 raise
             return False

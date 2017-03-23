@@ -149,7 +149,6 @@ class MailgunBackend(BaseEmailBackend):
             else:
                 content = post_data
                 headers = {'Connection': 'close'}
-                headers = None
 
         except:
             if not self.fail_silently:

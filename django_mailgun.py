@@ -150,6 +150,10 @@ class MailgunBackend(BaseEmailBackend):
                 content = post_data
                 headers = {'Connection': 'close'}
 
+            response = requests.post(self._api_url + "messages",
+                    auth=("api", self._access_key),
+                    data=content, headers=headers)
+
         except:
             if not self.fail_silently:
                 raise
